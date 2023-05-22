@@ -188,8 +188,10 @@ int strip(char *string, const char *symbols) {
                 break;
             }
             j++;
+
         }
         i++;
+        
     }
 
     return removals;
