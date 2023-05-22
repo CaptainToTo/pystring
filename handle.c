@@ -43,8 +43,12 @@ int main(void) {
     printf("removed '/n' from copy: %s\n", stripped);
     printf("original is unchanged: %s\n", joined);
 
+    char *str1_up = upper_dup(str1);
+    printf("Hello: %s\n", str1_up);
+
     delete_strs(&tokens, len);
     free(joined);
     free(stripped);
+    free(str1_up);
     return 0;
 }

@@ -6,6 +6,7 @@
 #include <ctype.h>
 #include <string.h>
 #include <stdbool.h>
+#include <assert.h>
 
 // String Comparison ===========================================
 
@@ -169,15 +170,14 @@ char *join(char **tokens, const size_t arr_len, const char delim, size_t *str_le
 int strip(char *string, const char *symbols) {
     if (string == NULL || symbols == NULL) return -1;
 
-    unsigned int i = 0; // tracks index of string
+    unsigned int i = 0;  // tracks index of string
     size_t removals = 0; // tracks number of removals have been made
     while (string[i] != '\0') {
 
         unsigned int j = 0; // tracks index of symbols
-        while(symbols[j] != '\0') { // conpare string char to all symbols
+        while(symbols[j] != '\0') { // compare string char to all symbols
 
             if (string[i] == symbols[j]) { // if string char is a symbol
-
                 // remove symbol
                 unsigned int k = i; // tracks following subarray
                 while (string[k] != '\0') {
@@ -185,6 +185,7 @@ int strip(char *string, const char *symbols) {
                     k++;
                 }
                 removals++;
+                break;
             }
             j++;
         }
@@ -214,6 +215,7 @@ char *strip_dup(const char *string, const char *symbols) {
 }
 
 // sets all characters to uppercase, returns number of characters changed
+// cannot give a string literal
 // returns -1 if string doesn't exist
 int upper(char *string) {
     if (string == NULL) return -1;
@@ -224,6 +226,7 @@ int upper(char *string) {
         char temp = string[i];
         string[i] = toupper(string[i]);
         if (temp != string[i]) caps++;
+        i++;
     }
 
     return caps;
@@ -249,6 +252,7 @@ int lower(char *string) {
         char temp = string[i];
         string[i] = tolower(string[i]);
         if (temp != string[i]) caps++;
+        i++;
     }
 
     return caps;
@@ -262,14 +266,6 @@ char *lower_dup(const char *string) {
     upper(lower_str);
     return lower_str;
 }
-
-// =============================================================
-
-// File Parsing ================================================
-
-int fline(const FILE *file, char *buffer, const size_t buf_len);
-
-char **flines(const FILE *file, const size_t max_char);
 
 // =============================================================
 

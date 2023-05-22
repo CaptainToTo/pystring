@@ -5,7 +5,6 @@ EXE = str-handle
 OBJ = handle.o
 
 all: clean $(EXE)
-	valgrind ./$(EXE)
 
 $(EXE): $(OBJ)
 	$(CC) -o $@ $^
