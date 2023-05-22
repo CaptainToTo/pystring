@@ -137,10 +137,11 @@ char *join(char **tokens, const size_t arr_len, const char delim, size_t *str_le
     size_t delim_size = delim == 0 ? 0 : 1; // determine size of delim
 
     // find total size of concatonated string
-    size_t total_len = 0;
+    size_t total_len = 1;
     for (unsigned int i = 0; i < arr_len; i++) {
         if (tokens[i] == NULL) continue; // skip string if it doesn't exist
-        total_len += strlen(tokens[i]) + delim_size;
+        total_len += strlen(tokens[i]);
+        if (i < arr_len - 1) total_len += delim_size;
     }
 
     // allocate new string
@@ -185,13 +186,10 @@ int strip(char *string, const char *symbols) {
                     k++;
                 }
                 removals++;
-                break;
             }
             j++;
-
         }
         i++;
-        
     }
 
     return removals;
