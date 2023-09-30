@@ -83,7 +83,7 @@ bool contains(const char *string, const char *sub_str) {
 // String Manipulation =========================================
 
 // splits string into an array of tokens based on the given deliminator char, does not change original string
-// returns the malloc'ed pointer to the array of strings
+// returns the malloc'ed pointer to the array of strings, the length of the array is stored in arr_len
 // returns NULL of split fails
 char **split(const char *string, const char delim, size_t *arr_len) {
     if (string == NULL) return NULL;
