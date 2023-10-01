@@ -97,6 +97,7 @@ char **split(const char *string, const char delim, size_t *arr_len) {
         if (string[i] == delim) tok_len += 1; // increment number of tokens if delim is found
         i++; str_len++;
     }
+    if (str_len < 1) return NULL;
 
     // allocate array of strings
     char **tokens = (char **) calloc(tok_len, sizeof(char *));
