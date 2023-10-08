@@ -10,28 +10,69 @@
 
 // String Comparison ===========================================
 
+/**
+ * @brief Returns true if the two strings are equal.
+ * 
+ * @param	string1	First string in comparison.
+ * @param	string2	Second string in comparison.
+ * @return  bool
+ */
 bool str_eq(const char *string1, const char *string2) {
     return strcmp(string1, string2) == 0;
 }
 
+/**
+ * @brief Returns true if the first string is greater than the second string.
+ * 
+ * @param	string1	First string in comparison.
+ * @param	string2	Second string in comparison.
+ * @return  bool
+ */
 bool str_gt(const char *string1, const char *string2) {
     return strcmp(string1, string2) > 0;
 }
 
+/**
+ * @brief Returns true if the first string is greater than or equal to the second string.
+ * 
+ * @param	string1	First string in comparison.
+ * @param	string2	Second string in comparison.
+ * @return  bool
+ */
 bool str_ge(const char *string1, const char *string2) {
     return strcmp(string1, string2) >= 0;
 }
 
+/**
+ * @brief Returns true if the first string is less than the second string.
+ * 
+ * @param	string1	First string in comparison.
+ * @param	string2	Second string in comparison.
+ * @return  bool
+ */
 bool str_lt(const char *string1, const char *string2) {
     return strcmp(string1, string2) < 0;
 }
 
+/**
+ * @brief Returns true if the first string is less than or equal to the second string.
+ * 
+ * @param	string1	First string in comparison.
+ * @param	string2	Second string in comparison.
+ * @return  bool
+ */
 bool str_le(const char *string1, const char *string2) {
     return strcmp(string1, string2) <= 0;
 }
 
-// returns the number of characters that match, and are in the same index
-// returns -1 on failure to compare strings
+/**
+ * @brief Returns the number of characters that match, and are in the same index.
+ *        Returns -1 on failure to compare strings.
+ * 
+ * @param	string1	First string in comparison.
+ * @param	string2	Second string in comparison.
+ * @return  int
+ */
 int match(const char *string1, const char *string2) {
     if (string1 == NULL || string2 == NULL) return -1;
 
@@ -45,9 +86,15 @@ int match(const char *string1, const char *string2) {
     return count;
 }
 
-// returns the index where the first instance of the substring starts
-// if no instance is found, return -1
-// if failed to compare strings, return -2
+/**
+ * @brief Returns the index where the first instance of the substring starts.
+ *        If no instance is found, return -1.
+ *        If failed to compare strings, return -2.
+ * 
+ * @param	string1	First string in comparison.
+ * @param	string2	Second string in comparison.
+ * @return  int
+ */
 int find(const char *string, const char *sub_str) {
     if (string == NULL || sub_str == NULL) return -2;
     
@@ -73,7 +120,13 @@ int find(const char *string, const char *sub_str) {
     return -1; // nothing was found
 }
 
-// returns true if string contains substring
+/**
+ * @brief Returns true if string contains substring.
+ * 
+ * @param	string1	First string in comparison.
+ * @param	string2	Second string in comparison.
+ * @return  bool
+ */
 bool contains(const char *string, const char *sub_str) {
     return find(string, sub_str) >= 0; 
 }
@@ -82,9 +135,16 @@ bool contains(const char *string, const char *sub_str) {
 
 // String Manipulation =========================================
 
-// splits string into an array of tokens based on the given deliminator char, does not change original string
-// returns the malloc'ed pointer to the array of strings, the length of the array is stored in arr_len
-// returns NULL of split fails
+/**
+ * @brief Splits string into an array of tokens based on the given deliminator char, does not change original string.
+ * Returns the malloc'ed pointer to the array of strings, the length of the array is stored in arr_len.
+ * Returns NULL if split fails.
+ * 
+ * @param	string	The string that will be split.
+ * @param	delim	The deliminator used to split the string.
+ * @param   arr_len Used to return the length of the tokens array.
+ * @return  char ** The malloc'ed tokens array, must be free'd.
+ */
 char **split(const char *string, const char delim, size_t *arr_len) {
     if (string == NULL) return NULL;
 
@@ -130,14 +190,22 @@ char **split(const char *string, const char delim, size_t *arr_len) {
     return tokens;
 }
 
-// concatonates an array of strings together into a malloc'ed string using a deliminator
-// returns NULL if concatonation fails
+/**
+ * @brief Concatenates an array of strings together into a malloc'ed string using a deliminator.
+ * Returns NULL if concatenation fails.
+ * 
+ * @param	tokens	The array of strings that will be joined.
+ * @param	arr_len	The length of the tokens array.
+ * @param   delim   The deliminator the tokens will be joined with, set to 0 to not use a deliminator.
+ * @param   str_len Used to return the length of the created string.
+ * @return  char *  The malloc'ed string, must be free'd.
+ */
 char *join(char **tokens, const size_t arr_len, const char delim, size_t *str_len) {
     if (tokens == NULL) return NULL;
 
     size_t delim_size = delim == 0 ? 0 : 1; // determine size of delim
 
-    // find total size of concatonated string
+    // find total size of concatenated string
     size_t total_len = 1;
     for (unsigned int i = 0; i < arr_len; i++) {
         if (tokens[i] == NULL) continue; // skip string if it doesn't exist
@@ -154,70 +222,32 @@ char *join(char **tokens, const size_t arr_len, const char delim, size_t *str_le
     for (unsigned int i = 0; i < arr_len; i++) {
         if (tokens[i] == NULL) continue; // skip string if it doesn't exist
         
-        // concatonate token
+        // concatenate token
         unsigned int t = 0; // tracks index of token
         while (tokens[i][t] != '\0') {
             joined[j] = tokens[i][t];
             j++; t++;
         }     
-        if (delim && i < arr_len - 1) { joined[j] = delim; j++; } // concatonate delim
+        if (delim && i < arr_len - 1) { joined[j] = delim; j++; } // concatenate delim
     }
 
     return joined;
 }
 
-// removes all characters in symbols from string, removal is done in-place
-// returns the number of characters removed
-// returns -1 if string or symbols doesn't exist
-int strip(char *string, const char *symbols) {
-    if (string == NULL || symbols == NULL) return -1;
+/**
+ * @brief Replace all instances of the substring target with
+*/
+// char *replace(const char *string, const char *target, const char *) {
 
-    unsigned int i = 0;  // tracks index of string
-    size_t removals = 0; // tracks number of removals have been made
-    while (string[i] != '\0') {
+// }
 
-        unsigned int j = 0; // tracks index of symbols
-        while(symbols[j] != '\0') { // compare string char to all symbols
-
-            if (string[i] == symbols[j]) { // if string char is a symbol
-                // remove symbol
-                unsigned int k = i; // tracks following subarray
-                while (string[k] != '\0') {
-                    string[k] = string[k + 1];
-                    k++;
-                }
-                removals++;
-            }
-            j++;
-        }
-        i++;
-    }
-
-    return removals;
-}
-
-// removes all characters in symbols from string, copy of string is created for removal, original is left un-altered
-// returns a pointer to the new string, NULL on failure
-char *strip_dup(const char *string, const char *symbols) {
-    if (string == NULL || symbols == NULL) return NULL;
-
-    char *temp = strdup(string); // duplicate string for temporary holding
-
-    size_t removals = strip(temp, symbols); // remove symbols in-place from temp
-
-    // allocate smaller string, +1 for terminating \0 char
-    char *stripped = (char *) calloc(strlen(string) - removals + 1, sizeof(char));
-
-    strcpy(stripped, temp); // copy stripped string into smaller string
-
-    free(temp); // free temp
-
-    return stripped;
-}
-
-// sets all characters to uppercase, returns number of characters changed
-// cannot give a string literal
-// returns -1 if string doesn't exist
+/**
+ * @brief Sets all characters to uppercase, returns number of characters changed.
+ * Returns -1 if string doesn't exist.
+ * 
+ * @param string The string that will be set to uppercase, cannot be string literal.
+ * @return int   The number of characters changed to uppercase.
+*/
 int upper(char *string) {
     if (string == NULL) return -1;
 
@@ -233,8 +263,13 @@ int upper(char *string) {
     return caps;
 }
 
-// sets all characters to uppercase, returns pointer to new string, original is un-altered
-// returns NULL if string doesn't exist
+/**
+ * @brief Sets all characters to uppercase, returns pointer to new string, original is un-altered.
+ * Returns NULL if string doesn't exist.
+ * 
+ * @param string The string that will be set to uppercase.
+ * @return char *
+*/
 char *upper_dup(const char *string) {
     if (string == NULL) return NULL;
     char *upper_str = strdup(string);
@@ -242,8 +277,13 @@ char *upper_dup(const char *string) {
     return upper_str;
 }
 
-// sets all characters to lowercase, returns number of characters changed
-// returns -1 if string doesn't exist
+/**
+ * @brief Sets all characters to lowercase, returns number of characters changed.
+ * Returns -1 if string doesn't exist.
+ * 
+ * @param string The string that will be set to lowercase, cannot be string literal.
+ * @return int   The number of characters changed to lowercase.
+*/
 int lower(char *string) {
     if (string == NULL) return -1;
 
@@ -259,8 +299,13 @@ int lower(char *string) {
     return caps;
 }
 
-// sets all characters to lowercase, returns pointer to new string, original is un-altered
-// returns NULL if string doesn't exist
+/**
+ * @brief Sets all characters to lowercase, returns pointer to new string, original is un-altered.
+ * Returns NULL if string doesn't exist.
+ * 
+ * @param string The string that will be set to lowercase.
+ * @return char *
+*/
 char *lower_dup(const char *string) {
     if (string == NULL) return NULL;
     char *lower_str = strdup(string);
@@ -273,19 +318,25 @@ char *lower_dup(const char *string) {
 // Garbage Collection ==========================================
 
 // frees array of strings
-void delete_strs(char ***array_ptr, const size_t arr_len) {
-    if (array_ptr == NULL || *array_ptr == NULL) return; // exit if there isn't anything to free
+/**
+ * @brief Frees an array of strings. The reference to the array will be set to NULL.
+ * 
+ * @param arr_ptr A pointer to the array that will be free'd.
+ * @param arr_len The length of the array of strings.
+*/
+void delete_strs(char ***arr_ptr, const size_t arr_len) {
+    if (arr_ptr == NULL || *arr_ptr == NULL) return; // exit if there isn't anything to free
 
     // free individual strings
     for (unsigned int i = 0; i < arr_len; i++) {
-        if ((*array_ptr)[i] == NULL) continue; // skip string if it doesn't exist
-        free((*array_ptr)[i]);
-        (*array_ptr)[i] = NULL;
+        if ((*arr_ptr)[i] == NULL) continue; // skip string if it doesn't exist
+        free((*arr_ptr)[i]);
+        (*arr_ptr)[i] = NULL;
     }
 
     // free array
-    free(*array_ptr);
-    *array_ptr = NULL;
+    free(*arr_ptr);
+    *arr_ptr = NULL;
 
     return;
 }
