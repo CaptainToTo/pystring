@@ -8,6 +8,10 @@
 #include <stdbool.h>
 #include <assert.h>
 
+// Constants ===================================================
+
+// =============================================================
+
 // String Comparison ===========================================
 
 /**
@@ -235,11 +239,68 @@ char *join(char **tokens, const size_t arr_len, const char delim, size_t *str_le
 }
 
 /**
- * @brief Replace all instances of the substring target with
+ * @brief Replace all instances of the substring target with instances of new_sub.
+ * Returns a new string that has been malloc'ed, the original is un-altered.
+ * 
+ * @param string   The original string.
+ * @param target   The substring that will be replaced.
+ * @param new_sub  The substring instances of target will be replaced with.
+ * @param str_len  Used to return the length of the new string.
+ * @return char *  The new string with replacements, must be free'd.
 */
-// char *replace(const char *string, const char *target, const char *) {
+char *replace(const char *string, const char *target, const char *new_sub, size_t *str_len) {
+    if (string == NULL) return NULL;
+    if (target == NULL) return NULL;
+    if (new_sub == NULL) return NULL;
 
-// }
+    size_t original_len = strlen(string);
+    size_t target_len = strlen(target);
+    size_t new_sub_len = strlen(new_sub);
+
+    // find targets
+    unsigned int target_count = 0;      // track number of target instances found
+    unsigned int targets[original_len]; // store targets where target instances start
+    for (unsigned int w = 0; w < original_len; w++) {
+        targets[w] = original_len + 1; // set to a value it can never be
+    }
+    unsigned int i = 0, j = 0;          // index for string & targets array
+    while (i < original_len) {
+        // mask string to search only unvisited chars
+        int found = 0;
+        if ((found = find(string + i, target)) < 0) {
+            break;
+        }
+        i += found;
+        targets[j] = i;
+        i++; j++;
+        target_count++;
+    }
+
+    // new string
+    size_t new_len = original_len - (target_len * target_count) + (new_sub_len * target_count) + 1;
+    char *new_str = (char *) calloc(new_len, sizeof(char));
+    if (str_len != NULL) *str_len = new_len;
+
+    // build new string
+    i = 0; // string index
+    j = 0; // targets index
+    for (unsigned int s = 0; s < new_len - 1; s++) {
+        if (i == targets[j]) {
+            // replace next target
+            for (unsigned int k = 0; k < new_sub_len; k++) {
+                new_str[s] = new_sub[k];
+                s++;
+            }
+            i += target_len;
+            j++;
+        }
+        new_str[s] = string[i];
+        i++;
+    }
+    new_str[new_len - 1] = '\0';
+
+    return new_str;
+}
 
 /**
  * @brief Sets all characters to uppercase, returns number of characters changed.

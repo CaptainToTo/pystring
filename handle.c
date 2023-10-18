@@ -14,7 +14,7 @@ int main(void) {
 
     if (str_gt(str3, str4)) printf("foo > bar\n");
 
-    printf("%d matching chracters between Hello and World\n", match(str1, str2));
+    printf("%d matching characters between Hello and World\n", match(str1, str2));
 
     printf("first instance of 'rld' in World starts at index %d\n", find(str2, "rld"));
 
@@ -34,21 +34,17 @@ int main(void) {
 
     unsigned long len2;
     char *joined = join(tokens, len, '/', &len2);
-    printf("%s\n", joined);
+    printf("joined with '/': %s\n", joined);
 
-    // strip(joined, "ei");
-    // printf("removed 'ei': %s\n", joined);
-
-    // char *stripped = strip_dup(joined, "/n");
-    // printf("removed '/n' from copy: %s\n", stripped);
-    // printf("original is unchanged: %s\n", joined);
+    char *replaced = replace(joined, "/", " ", NULL);
+    printf("replaced '/' with ' ': %s\n", replaced);
 
     char *str1_up = upper_dup(str1);
     printf("Hello: %s\n", str1_up);
 
     delete_strs(&tokens, len);
     free(joined);
-    //free(stripped);
+    free(replaced);
     free(str1_up);
     return 0;
 }
