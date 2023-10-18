@@ -1,4 +1,5 @@
 #include "pystring.h"
+#include <stdio.h>
 
 int main(void) {
     char *str1 = "Hello";
